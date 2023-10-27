@@ -33,6 +33,8 @@ Setup Docker (Step 1)
 
 Install docker from `here <https://docs.docker.com/get-docker/>`_
 
+If you already have docker installed, be sure to update **docker compose** to version 2, if necessary, from `here <https://docs.docker.com/compose/migrate/>`_
+
 ****************************************
 Run the demo project in docker (Step 2)
 ****************************************
@@ -42,6 +44,7 @@ django project with some additional requirements in the requirements.txt.
 
 Open the terminal application on your computer and go to a safe folder (i.e. cd ~/Projects), then:
 
+.. _quick-start:
 
 ::
 
@@ -55,7 +58,36 @@ Open the terminal application on your computer and go to a safe folder (i.e. cd 
 
 During the installation process, you will be prompted to enter your email address and set a username and password.
 Open your browser and insert ``http://localhost:8000/admin`` there you should be invited to login
-and continue with Step 4: create your first page
+and continue with Step 3: create your first page.
+
+
+**Possible Port Conflict**
+
+If you received an error attempting to start one of the containers with the ``docker compose up -d`` command, you may have a port conflict that needs to be resolved.  The error may look like this:
+::
+
+   ... Bind for 0.0.0.0:8000 failed: port is already allocated
+
+If you are currently running an instance of a web server on port **8000**, you will need to modify the compose.yaml file.
+
+For example, in the ``compose.yaml`` file. You might try changing...
+
+From this
+
+::
+
+    ports:
+      - "8000:80/tcp"
+
+to this
+
+::
+
+    ports:
+      - "8001:80/tcp"
+
+
+If you made a port change here, then re-run the the final step from above ``docker compose up -d``.
 
 ********************************
 Create your first page (Step 3)
@@ -71,8 +103,8 @@ Create your first page (Step 3)
    :align: center
 
 
-After selecting Next, you will add in your title and some basic text content for the new page,
-click Create.
+
+* After selecting Next, you will add in your title and some basic text content for the new page, click Create.
 
 .. image:: /introduction/images/create_page_with_django_cms2.png
    :alt: create a page with django cms
@@ -88,7 +120,7 @@ Publish your first page (Step 4)
 The page we just created is just a draft and needs to be published once you finish.
 As an editor, only you can see and edit your drafts, other visitors to your site will only see your published pages.
 
-Press "Publish page now."
+Press "Publish"
 
 .. image:: /introduction/images/django_cms_demo_page.png
    :alt: publish a page with django cms
