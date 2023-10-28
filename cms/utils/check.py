@@ -165,12 +165,12 @@ def check_sekizai(output):
             section.success("Sekizai is installed")
         else:
             section.error("Sekizai is not installed, could not find 'sekizai' in INSTALLED_APPS")
-        processors = list(
-            chain(*[template['OPTIONS'].get('context_processors', []) for template in settings.TEMPLATES]))
-        if 'sekizai.context_processors.sekizai' in processors:
-            section.success("Sekizai template context processor is installed")
-        else:
-            section.error("Sekizai template context processor is not installed, could not find "
+        #processors = list(
+        #    chain(*[template['OPTIONS'].get('context_processors', []) for template in settings.TEMPLATES]))
+        #if 'sekizai.context_processors.sekizai' in processors:
+        #    section.success("Sekizai template context processor is installed")
+        #else:
+        #    section.error("Sekizai template context processor is not installed, could not find "
                           "'sekizai.context_processors.sekizai' in TEMPLATES option context_processors")
 
         if not sekizai_installed:
@@ -247,10 +247,14 @@ def check_context_processors(output):
         processors = list(
             chain(*[template['OPTIONS'].get('context_processors', []) for template in settings.TEMPLATES]))
         required_processors = (
+            'sekizai.context_processors.sekizai',
             'cms.context_processors.cms_settings',
+            'django.template.context_processors.i18n',
         )
         for processor in required_processors:
-            if processor not in processors:
+            if processor in processors:
+                section.success("Context processor %s is installed" % processor)
+            else:
                 section.error("%s context processor must be in TEMPLATES option context_processors" % processor)
 
 
